@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "95A51E10-71D0-4895-A45B-76CB06CE8DE9"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8E89299C-1BB0-4CEC-AAEC-2A41BD896F51"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CleanList/Data/Repositories/MoviesRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "fetchMovies(for:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8E89299C-1BB0-4CEC-AAEC-2A41BD896F51 - a2729947165d708c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;CleanList.MovieListItem&gt;, CleanList.NetworkServiceError&gt;) -&gt; () in CleanList.MoviesRepository.fetchMovies(for: Swift.String, completion: (Swift.Result&lt;CleanList.MovieFetchResult, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CleanList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vasiliyfedotov/Sources/_education/CleanList/CleanList/Data/Repositories/MoviesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "763">
+               </Location>
+               <Location
+                  uuid = "8E89299C-1BB0-4CEC-AAEC-2A41BD896F51 - a2729947165d708c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;CleanList.MovieListItem&gt;, CleanList.NetworkServiceError&gt;) -&gt; () in CleanList.MoviesRepository.fetchMovies(for: Swift.String, completion: (Swift.Result&lt;CleanList.MovieFetchResult, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CleanList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vasiliyfedotov/Sources/_education/CleanList/CleanList/Data/Repositories/MoviesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "798">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B97EB595-813A-4CA8-82ED-34D2FB7F112D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CleanList/Data/Repositories/MoviesRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "fetchMovies(for:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B97EB595-813A-4CA8-82ED-34D2FB7F112D - 599e7bf1e9d0992a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CleanList.MoviesRepository.fetchMovies(for: Swift.String, completion: (Swift.Result&lt;CleanList.MovieFetchResult, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CleanList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vasiliyfedotov/Sources/_education/CleanList/CleanList/Data/Repositories/MoviesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "B97EB595-813A-4CA8-82ED-34D2FB7F112D - a2729947165d7008"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;CleanList.MovieListItem&gt;, CleanList.NetworkServiceError&gt;) -&gt; () in CleanList.MoviesRepository.fetchMovies(for: Swift.String, completion: (Swift.Result&lt;CleanList.MovieFetchResult, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CleanList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vasiliyfedotov/Sources/_education/CleanList/CleanList/Data/Repositories/MoviesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "518">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0FA5D284-1CD4-4793-B7A7-919EDB9D4BF4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CleanList/Presentation/MovieScene/MovieRequest/MovieRequestViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "requested(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
