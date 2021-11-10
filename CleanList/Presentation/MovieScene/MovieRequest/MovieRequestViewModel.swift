@@ -12,16 +12,21 @@ enum MovieRequestStatus {
     case loading
     case emptyResults
     case results
+    case retry
 }
 
-protocol MovieRequestViewModelInput: class {
+protocol MovieRequestViewModelInput: AnyObject {
     func initialize()
     func requested(_ request: String)
+    func requestStringCleared()
+    func requestStringChanged(to string: String)
 }
 
-protocol MovieRequestViewModelOutput: class {
+protocol MovieRequestViewModelOutput: AnyObject {
     var statusUpdate: Observable<MovieRequestStatus> { get }
     var queryText: Observable<String> { get }
+    var infoMessage: Observable<String?> { get }
+    var errorMessage: Observable<String?> { get }
 }
 
 protocol MovieRequestViewModelProtocol: MovieRequestViewModelInput, MovieRequestViewModelOutput {}
@@ -35,9 +40,17 @@ class MovieRequestViewModel: MovieRequestViewModelProtocol {
     }
     private var statusUpdateObservable: Observable<MovieRequestStatus> = .init(.initial)
     private var queryTextObservable: Observable<String> = .init("")
-    
+    private var infoMessageObservable: Observable<String?> = .init("")
+    private var errorMessageObservable: Observable<String?> = .init("")
+
     private let movieListRequestUseCase: RequestMovieListUseCaseProtocol
     private let resultsSetter: MovieListDataSetterProtocol
+    
+    private let cacheDateFormatter: DateFormatter = {
+        let obj = DateFormatter()
+        obj.dateFormat = "dd/MM/yyyy HH:mm"
+        return obj
+    }()
     
     init(movieListRequestUseCase: RequestMovieListUseCaseProtocol,
          resultsSetter: MovieListDataSetterProtocol) {
@@ -61,18 +74,38 @@ class MovieRequestViewModel: MovieRequestViewModelProtocol {
             case .success(let fetch):
                 
                 switch fetch {
-                case .cache(let movies, let fetchDate, let error): fallthrough
+                case .cache(let movies, let fetchDate, _):
+                    let cacheDateString = self.cacheDateFormatter.string(from: fetchDate)
+                    self.infoMessage.value = "Показаны данные из кэша за " + cacheDateString
+                    fallthrough
                 case .server(let movies):
                     self.resultsSetter.setData(movies)
                     self.currentStatus = movies.isEmpty ? .emptyResults : .results
                 }
             case .failure(let error):
-                break
+                if let error = error as? NetworkServiceError,
+                   case .cancelled = error {
+                    // do nothing
+                    return
+                }
+                
+                self.currentStatus = .retry
             }
         }
     }
+    
+    func requestStringCleared() {
+        movieListRequestUseCase.cancelCurrentRequestIfAny()
+    }
+    
+    func requestStringChanged(to string: String) {
+        movieListRequestUseCase.cancelCurrentRequestIfAny()
+    }
+
 
     // MARK: - MovieRequestViewModelOutput
     var statusUpdate: Observable<MovieRequestStatus> { statusUpdateObservable }
     var queryText: Observable<String> { queryTextObservable }
+    var infoMessage: Observable<String?> { infoMessageObservable }
+    var errorMessage: Observable<String?> { errorMessageObservable }
 }

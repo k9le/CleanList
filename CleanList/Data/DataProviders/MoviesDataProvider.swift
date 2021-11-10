@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesDataProviderProtocol {
-    func fetchMovies(for query: String, completion: @escaping ((Result<[MovieListItem], NetworkServiceError>) -> Void))
+    func fetchMovies(for query: String, completion: @escaping ((Result<[MovieListItem], NetworkServiceError>) -> Void)) -> Cancellable
 }
 
 
@@ -20,7 +20,7 @@ class MoviesDataProvider: MoviesDataProviderProtocol {
         self.networkService = networkService
     }
 
-    func fetchMovies(for query: String, completion: @escaping ((Result<[MovieListItem], NetworkServiceError>) -> Void)) {
+    func fetchMovies(for query: String, completion: @escaping ((Result<[MovieListItem], NetworkServiceError>) -> Void)) -> Cancellable {
 
         let urlString = "https://www.myapifilms.com/tmdb/searchMovie"
         let url = URL(string: urlString)
@@ -36,7 +36,7 @@ class MoviesDataProvider: MoviesDataProviderProtocol {
         urlComponents.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
         
         let queryURL = urlComponents.url(relativeTo: url)!
-        networkService.request(ResponseData.self,
+        return networkService.request(ResponseData.self,
                                urlRequest: URLRequest(url: queryURL)) { result in
             switch result {
             case .failure(let error):

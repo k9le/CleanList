@@ -7,18 +7,17 @@
 
 import Foundation
 
-protocol Cancellable {
-    func cancel()
-}
-
 protocol RequestMovieListUseCaseProtocol {
     func request(for query: String, completion: @escaping ((Result<MovieFetchResult, Error>) -> Void))
+    func cancelCurrentRequestIfAny()
 }
 
 class RequestMovieListUseCase: RequestMovieListUseCaseProtocol {
     
-    let queryRepositorySaver: QueryPersistentStorageSaveProtocol
-    let moviesRepository: MoviesRepositoryProtocol
+    private let queryRepositorySaver: QueryPersistentStorageSaveProtocol
+    private let moviesRepository: MoviesRepositoryProtocol
+    
+    private var currentRequest: Cancellable?
     
     init(querySaver: QueryPersistentStorageSaveProtocol,
          moviesRepository: MoviesRepositoryProtocol) {
@@ -34,10 +33,14 @@ class RequestMovieListUseCase: RequestMovieListUseCaseProtocol {
             print("")
         }
         
-        moviesRepository.fetchMovies(for: query) { result in 
+        currentRequest = moviesRepository.fetchMovies(for: query) { [weak self] result in
             completion(result)
+            self?.currentRequest = nil
         }
-        // вернуть Cancellable
+    }
+    
+    func cancelCurrentRequestIfAny() {
+        currentRequest?.cancel()
     }
 
 }

@@ -13,7 +13,7 @@ enum MovieFetchResult {
 }
 
 protocol MoviesRepositoryProtocol {
-    func fetchMovies(for query: String, completion: @escaping ((Result<MovieFetchResult, Error>) -> Void))
+    func fetchMovies(for query: String, completion: @escaping ((Result<MovieFetchResult, Error>) -> Void)) -> Cancellable
 }
 
 class MoviesRepository: MoviesRepositoryProtocol {
@@ -30,7 +30,7 @@ class MoviesRepository: MoviesRepositoryProtocol {
         self.queryCache = queryCache
     }
 
-    func fetchMovies(for query: String, completion: @escaping ((Result<MovieFetchResult, Error>) -> Void))
+    func fetchMovies(for query: String, completion: @escaping ((Result<MovieFetchResult, Error>) -> Void)) -> Cancellable
     {
 
         moviesDataProvider.fetchMovies(for: query) { [weak self] result in
@@ -48,6 +48,12 @@ class MoviesRepository: MoviesRepositoryProtocol {
                 completion(.success(.server(resultArray)))
                 
             case .failure(let error):
+                
+                if case .cancelled = error {
+                    completion(.failure(error))
+                    return
+                }
+                
                 do {
                     if let cacheFetch = try self.queryCache.fetchCacheIfAny(for: query) {
                         completion(.success(.cache(cacheFetch.movies, cacheFetch.fetchedAt, error)))

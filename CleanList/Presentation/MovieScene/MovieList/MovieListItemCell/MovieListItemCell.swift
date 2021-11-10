@@ -172,7 +172,7 @@ class MovieListItemCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             movieImageView.leadingAnchor.constraint(equalTo: imageContentView.leadingAnchor, constant: 5),
-            movieImageView.trailingAnchor.constraint(equalTo: imageContentView.trailingAnchor, constant: -5),
+            movieImageView.trailingAnchor.constraint(equalTo: imageContentView.trailingAnchor, constant: -10),
             movieImageView.topAnchor.constraint(equalTo: imageContentView.topAnchor, constant: 5),
             movieImageBottomConstraint,
             movieImageView.widthAnchor.constraint(equalToConstant: 175),
@@ -216,6 +216,10 @@ class MovieListItemCell: UITableViewCell {
                 self.movieImageView.image = image
                 self.activityIndicator.isHidden = true
                 self.updateBlock?()
+            case .loadFailed:
+                self.setImageHide(false)
+                self.movieImageView.image = nil
+                self.activityIndicator.isHidden = true
             }
         }
         

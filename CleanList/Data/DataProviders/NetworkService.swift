@@ -8,6 +8,7 @@
 import Foundation
 
 enum NetworkServiceError: Error {
+    case cancelled
     case emptyDataResponse
     case decodeError(Error)
     case networkError(Error)
@@ -20,7 +21,7 @@ protocol RequestDecodableNetworkServiceProtocol {
     
     func request<T: Decodable>(_ type: T.Type,
                                urlRequest: URLRequest,
-                               completion: @escaping RequestDecodableCompletionBlock<T>)
+                               completion: @escaping RequestDecodableCompletionBlock<T>) -> Cancellable
     
 }
 
@@ -28,7 +29,7 @@ protocol RequestDataNetworkServiceProtocol {
     typealias RequestDataCompletionBlock = (Result<Data, NetworkServiceError>) -> Void
     
     func requestData(with urlRequest: URLRequest,
-                     completion: @escaping RequestDataCompletionBlock)
+                     completion: @escaping RequestDataCompletionBlock) -> Cancellable
 }
 
 
@@ -49,9 +50,9 @@ extension NetworkService: RequestDecodableNetworkServiceProtocol {
     
     func request<T: Decodable>(_ type: T.Type,
                                urlRequest: URLRequest,
-                               completion: @escaping RequestDecodableCompletionBlock<T>) {
+                               completion: @escaping RequestDecodableCompletionBlock<T>) -> Cancellable {
         
-        requestData(with: urlRequest) { result in
+        return requestData(with: urlRequest) { result in
             
             if case .success(let data) = result {
                 let decodeResult = self.decoder.decode(T.self, fromData: data)
@@ -72,11 +73,15 @@ extension NetworkService: RequestDecodableNetworkServiceProtocol {
 extension NetworkService: RequestDataNetworkServiceProtocol {
     
     func requestData(with urlRequest: URLRequest,
-                     completion: @escaping RequestDataCompletionBlock) {
-        session.dataTask(with: urlRequest) { (data, response, error) in
+                     completion: @escaping RequestDataCompletionBlock) -> Cancellable {
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
             
-            if let error = error {
-                completion(.failure(.networkError(error)))
+            if let error = error as NSError? {
+                if error.domain == NSURLErrorDomain && error.code == NSURLErrorCancelled {
+                    completion(.failure(.cancelled))
+                } else {
+                    completion(.failure(.networkError(error)))
+                }
                 return
             }
 
@@ -86,7 +91,10 @@ extension NetworkService: RequestDataNetworkServiceProtocol {
             }
             completion(.success(data))
         }
-        .resume()
+        
+        task.resume()
+        
+        return task
     }
 
 }

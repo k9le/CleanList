@@ -9,7 +9,6 @@ import UIKit
 
 class MovieRequestViewController: UIViewController {
     
-    private var statusView: MovieRequestStatusView { rootView.statusView }
     private var searchBar: UISearchBar { rootView.searchBar }
     
     private var rootView: MovieRequestRootView {
@@ -77,6 +76,10 @@ private extension MovieRequestViewController {
         viewModel?.queryText.observe(on: self) { [weak self] queryText in
             self?.searchBar.text = queryText
         }
+        viewModel?.infoMessage.observe(on: self) { text in
+            guard let text = text else { return }
+            Toast.makeToast(text)
+        }
     }
     
     func statusUpdate(_ status: MovieRequestStatus) {
@@ -88,10 +91,12 @@ private extension MovieRequestViewController {
         switch status {
         case .loading: fallthrough
         case .emptyResults: fallthrough
-        case .initial:
-            statusView.status = status
+        case .initial: fallthrough
+        case .retry:
+            rootView.statusView.status = status
         case .results:
             resultsListDemonstrator?.insert()
+            break
         }
     }
 }
@@ -109,5 +114,13 @@ extension MovieRequestViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         viewModel?.requested(query)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel?.requestStringCleared()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel?.requestStringChanged(to: searchText)
     }
 }

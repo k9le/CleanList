@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol MovieQueryListViewModelInput: class {
+protocol MovieQueryListViewModelInput: AnyObject {
     func initialize()
     func didChoose(_ index: Int)
 }
 
-protocol MovieQueryListViewModelOutput: class {
+protocol MovieQueryListViewModelOutput: AnyObject {
     var listUpdate: Observable<[MovieQueryListItemViewModelProtocol]> { get }
 }
 

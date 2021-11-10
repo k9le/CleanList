@@ -7,11 +7,12 @@
 
 import Foundation
 
-protocol MovieListViewModelInput: class {
+protocol MovieListViewModelInput: AnyObject {
     func initialize(with data: [MovieListItem])
+    func deinitialize()
 }
 
-protocol MovieListViewModelOutput: class {
+protocol MovieListViewModelOutput: AnyObject {
     var listUpdate: Observable<[MovieListItemViewModelProtocol]> { get }
 }
 
@@ -33,6 +34,13 @@ class MovieListViewModel: MovieListViewModelProtocol {
             MovieListItemViewModel(with: $0, imageDataProvider: imageDataProvider)
         }
     }
+    
+    func deinitialize() {
+        listUpdate.value.forEach {
+            $0.cancelLoadingImage()
+        }
+    }
+
     
     // MARK: - MovieListViewModelOutput
     var listUpdate: Observable<[MovieListItemViewModelProtocol]> { listUpdateObservable }

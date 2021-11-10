@@ -19,8 +19,8 @@ class MovieRequestAssembly {
         
         let moviesPersistentStorage = MoviesPersistentStorage(persistentContainer: PersistentContainer.shared)
         let moviesDataProvider = MoviesDataProvider(networkService: networkService)
-        
         let queryPersistentStorage = QueryPersistentStorage(persistentContainer: PersistentContainer.shared)
+        
         let movieRepository = MoviesRepository(
             persistentStorage: moviesPersistentStorage,
             dataProvider: moviesDataProvider,

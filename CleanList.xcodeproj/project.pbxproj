@@ -50,6 +50,8 @@
 		C884F80B25FFB6180017681C /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C884F80A25FFB6180017681C /* MoviesRepository.swift */; };
 		C884F81125FFBCCB0017681C /* MoviesPersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C884F81025FFBCCB0017681C /* MoviesPersistentStorage.swift */; };
 		C884F81A25FFBEB10017681C /* MoviesDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C884F81925FFBEB10017681C /* MoviesDataProvider.swift */; };
+		C8AEFEE9261CBF9C00A5F7B6 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AEFEE8261CBF9C00A5F7B6 /* Cancellable.swift */; };
+		C8AEFF012622477900A5F7B6 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AEFF002622477900A5F7B6 /* Toast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		C884F80A25FFB6180017681C /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		C884F81025FFBCCB0017681C /* MoviesPersistentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesPersistentStorage.swift; sourceTree = "<group>"; };
 		C884F81925FFBEB10017681C /* MoviesDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDataProvider.swift; sourceTree = "<group>"; };
+		C8AEFEE8261CBF9C00A5F7B6 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		C8AEFF002622477900A5F7B6 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +196,7 @@
 		C884F75725FD3FB60017681C /* CleanList */ = {
 			isa = PBXGroup;
 			children = (
+				C8AEFEE7261CBF8F00A5F7B6 /* Shared */,
 				C884F7D425FE86AA0017681C /* Utilities */,
 				C884F79D25FD43890017681C /* Extensions */,
 				C884F78E25FD3FD60017681C /* AppDelegate */,
@@ -385,6 +390,15 @@
 			path = DataProviders;
 			sourceTree = "<group>";
 		};
+		C8AEFEE7261CBF8F00A5F7B6 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C8AEFEE8261CBF9C00A5F7B6 /* Cancellable.swift */,
+				C8AEFF002622477900A5F7B6 /* Toast.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -532,6 +546,7 @@
 				C884F79F25FD43F70017681C /* UIViewController+Extensions.swift in Sources */,
 				C884F7CF25FE71720017681C /* MovieQueryListFactory.swift in Sources */,
 				C8431EEE26091C240042C733 /* QueryEntity+CoreDataProperties.swift in Sources */,
+				C8AEFF012622477900A5F7B6 /* Toast.swift in Sources */,
 				C878CC412603B44100D333CE /* NetworkService.swift in Sources */,
 				C884F79625FD41E80017681C /* MovieRequestViewController.swift in Sources */,
 				C8431EED26091C240042C733 /* QueryEntity+CoreDataClass.swift in Sources */,
@@ -542,6 +557,7 @@
 				C884F75B25FD3FB60017681C /* SceneDelegate.swift in Sources */,
 				C884F7C725FE6CFA0017681C /* MovieRequestRootView.swift in Sources */,
 				C8431F70260F7A8E0042C733 /* AspectRatioImageView.swift in Sources */,
+				C8AEFEE9261CBF9C00A5F7B6 /* Cancellable.swift in Sources */,
 				C884F81A25FFBEB10017681C /* MoviesDataProvider.swift in Sources */,
 				C884F7FE25FFAED80017681C /* MovieListItem.swift in Sources */,
 				C884F7DB25FE8AED0017681C /* MovieQueryListViewModel.swift in Sources */,

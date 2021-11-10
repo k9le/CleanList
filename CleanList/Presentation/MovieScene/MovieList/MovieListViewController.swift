@@ -23,6 +23,10 @@ class MovieListViewController: UITableViewController {
         super.viewDidLoad()
         setupTableView()
     }
+    
+    deinit {
+        viewModel.deinitialize()
+    }
 }
 
 private extension MovieListViewController {

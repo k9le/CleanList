@@ -14,6 +14,7 @@ class MovieRequestStatusView: UIView {
             noResultsLabel.isHidden = true
             makeLabel.isHidden = true
             activityIndicator.isHidden = true
+            retryButton.isHidden = true
             
             switch status {
             case .initial:
@@ -22,6 +23,8 @@ class MovieRequestStatusView: UIView {
                 noResultsLabel.isHidden = false
             case .loading:
                 activityIndicator.isHidden = false
+            case .retry:
+                retryButton.isHidden = false
             case .results: break
             }
         }
@@ -48,10 +51,21 @@ class MovieRequestStatusView: UIView {
         return obj
     }()
 
+    private let retryButton: UIButton = {
+        let obj = UIButton(type: .system)
+        obj.translatesAutoresizingMaskIntoConstraints = false
+        obj.setTitle("Retry", for: .normal)
+        obj.setTitleColor(.lightGray, for: .normal)
+        obj.layer.cornerRadius = 5.0
+        obj.layer.borderWidth = 1
+        obj.layer.borderColor = UIColor.lightGray.cgColor
+        return obj
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        [noResultsLabel, makeLabel, activityIndicator].forEach {
+        [noResultsLabel, makeLabel, activityIndicator, retryButton].forEach {
             addSubview($0)
             
             NSLayoutConstraint.activate([
@@ -60,6 +74,11 @@ class MovieRequestStatusView: UIView {
             ])
         }
         
+        NSLayoutConstraint.activate([
+            retryButton.widthAnchor.constraint(equalToConstant: 60),
+            retryButton.heightAnchor.constraint(equalToConstant: 30),
+        ])
+
         status = .initial
     }
 

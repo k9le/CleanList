@@ -122,7 +122,8 @@ class QueryPersistentStorage: QueryPersistentStorageProtocol {
     private func fetchQueryItemIfAny(for queryString: String) throws -> QueryEntity? {
         let fetchRequest = NSFetchRequest<QueryEntity>(entityName: "QueryEntity")
         fetchRequest.fetchLimit = 1
-        
+        fetchRequest.predicate = NSPredicate(format: "queryString == %@", queryString)
+
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest).first
         } catch {

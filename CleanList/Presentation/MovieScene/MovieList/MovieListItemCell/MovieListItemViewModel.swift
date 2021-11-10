@@ -11,6 +11,7 @@ enum ImageState {
     case noImage
     case loading
     case image(UIImage)
+    case loadFailed
 }
 
 protocol MovieListItemViewModelProtocol {
@@ -19,6 +20,8 @@ protocol MovieListItemViewModelProtocol {
     var releaseDate: String { get }
 
     var imageState: Observable<ImageState> { get }
+    
+    func cancelLoadingImage()
 }
 
 class MovieListItemViewModel: MovieListItemViewModelProtocol {
@@ -29,25 +32,23 @@ class MovieListItemViewModel: MovieListItemViewModelProtocol {
     
     let imageState: Observable<ImageState>
     
-    private var imageDataProvider: MovieImageDataProviderProtocol
+    private var imageLoadingCancellable: Cancellable?
     
     init(with item: MovieListItem, imageDataProvider: MovieImageDataProviderProtocol) {
         title = item.title
         description = item.description
         releaseDate = item.releaseDate
         
-        self.imageDataProvider = imageDataProvider
-        
         if let imageURL = item.imageURL {
             imageState = .init(.loading)
             
-            imageDataProvider.fetchImage(for: imageURL) { [weak self] result in
+            imageLoadingCancellable = imageDataProvider.fetchImage(for: imageURL) { [weak self] result in
                 guard let self = self else { return }
                 
                 if case .success(let data) = result, let image = UIImage(data: data) {
                     self.imageState.value = .image(image)
                 } else {
-                    self.imageState.value = .noImage
+                    self.imageState.value = .loadFailed
                 }
             }
         } else {
@@ -55,4 +56,9 @@ class MovieListItemViewModel: MovieListItemViewModelProtocol {
         }
         
     }
+    
+    func cancelLoadingImage() {
+        imageLoadingCancellable?.cancel()
+    }
+
 }
